@@ -38,6 +38,13 @@
   #controls button:disabled:hover { background:#1c2940; color:#fff; }
   #pageno { font-size:14px; color:#c6d2e3; min-width:150px; text-align:center; }
   #hint { font-size:11px; color:#5c6b84; padding-bottom:10px; }
+  #zoomov{position:fixed;inset:0;background:rgba(5,8,15,.96);z-index:100;display:none;flex-direction:column;}
+  #zoombar{display:flex;gap:10px;justify-content:center;align-items:center;padding:12px;flex-wrap:wrap;}
+  #zoombar button{background:#1c2940;color:#fff;border:1px solid #35d0cb;border-radius:8px;padding:8px 16px;font-size:15px;cursor:pointer;}
+  #zoombar button:hover{background:#35d0cb;color:#0d1626;}
+  #zoomstage{flex:1;overflow:hidden;position:relative;touch-action:none;display:flex;align-items:center;justify-content:center;min-height:0;}
+  #zoomimg{max-width:96%;max-height:100%;touch-action:none;user-select:none;-webkit-user-drag:none;transform-origin:center center;}
+  #zoomhint{text-align:center;font-size:12px;color:#8b98ad;padding:8px 12px 12px;}
 </style>
 </head>
 <body>
@@ -54,13 +61,24 @@
 <div id="controls">
   <button id="prev">← Prev</button>
   <div id="pageno">– / –</div>
+  <button id="zopen">🔍 Zoom</button>
   <button id="next">Next →</button>
 </div>
-<div id="hint">Tip: drag a page corner, or click the left / right side of a page to turn it.</div>
+<div id="hint">Tip: drag a page corner or tap a page side to turn it · tap 🔍 Zoom to magnify the page.</div>
+<div id="zoomov">
+  <div id="zoombar">
+    <button id="zin">＋</button>
+    <button id="zout">－</button>
+    <button id="zreset">Reset</button>
+    <button id="zclose">✕ Close</button>
+  </div>
+  <div id="zoomstage"><img id="zoomimg" alt="Zoomed book page"></div>
+  <div id="zoomhint">Pinch or use ＋/－ to zoom · drag to move · double-tap toggles zoom</div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
 <script>
 (function(){
-  var TOTAL = 389, loaded = 0, urls = [];
+  var TOTAL = 389, loaded = 0, urls = [], flip = null;
   var bar = document.getElementById('loadbar'),
       pc = document.getElementById('loadpc'),
       pageno = document.getElementById('pageno'),
@@ -80,7 +98,7 @@
       document.querySelector('#loader .t').textContent = 'Could not load the page-flip library. Check your connection and reload.';
       return;
     }
-    var flip = new St.PageFlip(document.getElementById('flipbook'), {
+    flip = new St.PageFlip(document.getElementById('flipbook'), {
       width: 550, height: 712,
       size: 'stretch',
       minWidth: 300, maxWidth: 1100,
@@ -99,11 +117,87 @@
     prevB.onclick = function(){ flip.flipPrev(); };
     nextB.onclick = function(){ flip.flipNext(); };
     document.addEventListener('keydown', function(ev){
+      if (document.getElementById('zoomov').style.display === 'flex') {
+        if (ev.key === 'Escape') zClose();
+        return;
+      }
       if (ev.key === 'ArrowLeft') flip.flipPrev();
       if (ev.key === 'ArrowRight') flip.flipNext();
     });
     document.getElementById('loader').style.display = 'none';
   }
+  /* ---------- page zoom lightbox ---------- */
+  var zov=document.getElementById('zoomov'),
+      zstage=document.getElementById('zoomstage'),
+      zimg=document.getElementById('zoomimg'),
+      zscale=1, zx=0, zy=0, zdw=0, zdh=0,
+      ZMIN=1, ZMAX=4;
+  function zApply(){ zimg.style.transform='translate('+zx+'px,'+zy+'px) scale('+zscale+')'; }
+  function zClamp(){
+    if(!zdw) return;
+    var sw=zstage.clientWidth, sh=zstage.clientHeight;
+    var mx=Math.max(0,(zdw*zscale-sw)/2), my=Math.max(0,(zdh*zscale-sh)/2);
+    zx=Math.min(mx,Math.max(-mx,zx)); zy=Math.min(my,Math.max(-my,zy));
+  }
+  function zSet(ns,cx,cy){
+    ns=Math.min(ZMAX,Math.max(ZMIN,ns));
+    if(ns===zscale) return;
+    var r=zstage.getBoundingClientRect();
+    if(cx===undefined){cx=r.width/2; cy=r.height/2;}
+    cx-=r.width/2; cy-=r.height/2;
+    var k=ns/zscale;
+    zx=zx*k+cx*(1-k); zy=zy*k+cy*(1-k);
+    zscale=ns;
+    if(zscale===1){zx=0; zy=0;}
+    zClamp(); zApply();
+  }
+  function zOpen(){
+    if(!flip) return;
+    var i=flip.getCurrentPageIndex();
+    zdw=0; zdh=0;
+    zimg.onload=function(){ zdw=zimg.clientWidth||0; zdh=zimg.clientHeight||0; zClamp(); zApply(); };
+    zimg.src=urls[i]||urls[0];
+    zscale=1; zx=0; zy=0; zApply();
+    zov.style.display='flex';
+  }
+  function zClose(){ zov.style.display='none'; zimg.removeAttribute('src'); }
+  document.getElementById('zopen').onclick=zOpen;
+  document.getElementById('zclose').onclick=zClose;
+  document.getElementById('zin').onclick=function(){zSet(zscale*1.4);};
+  document.getElementById('zout').onclick=function(){zSet(zscale/1.4);};
+  document.getElementById('zreset').onclick=function(){zSet(1);};
+  zimg.addEventListener('dblclick',function(){ zSet(zscale>1.2?1:2.5); });
+  zstage.addEventListener('wheel',function(e){
+    e.preventDefault();
+    var r=zstage.getBoundingClientRect();
+    zSet(zscale*(e.deltaY<0?1.18:1/1.18), e.clientX-r.left, e.clientY-r.top);
+  },{passive:false});
+  var zpts=new Map(), zPinch=0;
+  zstage.addEventListener('pointerdown',function(e){
+    try{zstage.setPointerCapture(e.pointerId);}catch(_){}
+    zpts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(zpts.size===2){var p=Array.from(zpts.values()); zPinch=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y);}
+  });
+  zstage.addEventListener('pointermove',function(e){
+    if(!zpts.has(e.pointerId)) return;
+    var prev=zpts.get(e.pointerId);
+    zpts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(zpts.size===1){
+      if(zscale>1){ zx+=e.clientX-prev.x; zy+=e.clientY-prev.y; zClamp(); zApply(); }
+    }else if(zpts.size===2){
+      var p=Array.from(zpts.values());
+      var d=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y);
+      if(zPinch>0&&d>0){
+        var r=zstage.getBoundingClientRect();
+        zSet(zscale*(d/zPinch),(p[0].x+p[1].x)/2-r.left,(p[0].y+p[1].y)/2-r.top);
+      }
+      zPinch=d;
+    }
+  });
+  var zEnd=function(e){ zpts.delete(e.pointerId); zPinch=0; };
+  zstage.addEventListener('pointerup',zEnd);
+  zstage.addEventListener('pointercancel',zEnd);
+  /* ---------- preload all pages ---------- */
   urls.forEach(function(u){
     var im = new Image();
     var done = function(){
