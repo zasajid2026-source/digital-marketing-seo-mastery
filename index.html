@@ -3,214 +3,257 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Digital Marketing &amp; SEO Mastery — Digital Flipbook</title>
+<title>Digital Marketing &amp; SEO Mastery — From Zero to Expert</title>
+<meta name="description" content="Digital Marketing & SEO Mastery: a 387-page beginner's textbook. 27 chapters, 6 parts, 89 charts. Read the full book free online.">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html, body { height:100%; }
-  body {
-    background:#0d1626;
-    color:#e8edf5;
-    font-family:"Segoe UI", Arial, sans-serif;
-    display:flex; flex-direction:column; align-items:center;
-    min-height:100vh; overflow:hidden;
-  }
-  header { text-align:center; padding:14px 16px 6px; }
-  header h1 { font-size:20px; letter-spacing:.5px; }
-  header h1 span { color:#35d0cb; }
-  header p { font-size:12px; color:#8b98ad; margin-top:4px; }
-  #stage { flex:1; width:100%; display:flex; align-items:center; justify-content:center; padding:6px 0; min-height:0; }
-  #flipbook { box-shadow:0 18px 60px rgba(0,0,0,.55); }
-  #loader {
-    position:fixed; inset:0; background:#0d1626; z-index:50;
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px;
-  }
-  #loader .t { font-size:18px; }
-  #loader .barw { width:min(420px,80vw); height:10px; background:#1c2940; border-radius:6px; overflow:hidden; }
-  #loader .bar { height:100%; width:0%; background:#35d0cb; border-radius:6px; transition:width .2s; }
-  #loader .pc { font-size:13px; color:#8b98ad; }
-  #controls { display:flex; align-items:center; gap:14px; padding:10px 0 16px; }
-  #controls button {
-    background:#1c2940; color:#fff; border:1px solid #35d0cb; border-radius:8px;
-    padding:9px 18px; font-size:15px; cursor:pointer;
-  }
-  #controls button:hover { background:#35d0cb; color:#0d1626; }
-  #controls button:disabled { opacity:.35; cursor:default; }
-  #controls button:disabled:hover { background:#1c2940; color:#fff; }
-  #pageno { font-size:14px; color:#c6d2e3; min-width:150px; text-align:center; }
-  #hint { font-size:11px; color:#5c6b84; padding-bottom:10px; }
-  #zoomov{position:fixed;inset:0;background:rgba(5,8,15,.96);z-index:100;display:none;flex-direction:column;}
-  #zoombar{display:flex;gap:10px;justify-content:center;align-items:center;padding:12px;flex-wrap:wrap;}
-  #zoombar button{background:#1c2940;color:#fff;border:1px solid #35d0cb;border-radius:8px;padding:8px 16px;font-size:15px;cursor:pointer;}
-  #zoombar button:hover{background:#35d0cb;color:#0d1626;}
-  #zoomstage{flex:1;overflow:hidden;position:relative;touch-action:none;display:flex;align-items:center;justify-content:center;min-height:0;}
-  #zoomimg{max-width:96%;max-height:100%;touch-action:none;user-select:none;-webkit-user-drag:none;transform-origin:center center;}
-  #zoomhint{text-align:center;font-size:12px;color:#8b98ad;padding:8px 12px 12px;}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0d1626;color:#e8edf5;font-family:"Segoe UI",Arial,Helvetica,sans-serif;line-height:1.6}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  header.hero{padding:56px 0 40px;text-align:center}
+  .hero-grid{display:flex;gap:40px;align-items:center;justify-content:center;flex-wrap:wrap;text-align:left}
+  .cover{width:min(300px,70vw);border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+  .hero h1{font-size:clamp(30px,5vw,52px);line-height:1.15;margin-bottom:6px}
+  .hero h1 span{color:#35d0cb}
+  .tagline{font-size:clamp(16px,2.4vw,22px);color:#9fb0c8;margin:10px 0 18px}
+  .stats{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+  .stat{background:#16233a;border:1px solid #23405e;border-radius:10px;padding:10px 16px;font-size:14px}
+  .stat b{color:#35d0cb;font-size:19px;display:block}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
+  .btn{display:inline-block;padding:14px 28px;border-radius:10px;font-size:17px;font-weight:700;text-decoration:none;cursor:pointer;border:none}
+  .btn-primary{background:#35d0cb;color:#0d1626}
+  .btn-primary:hover{background:#5ce0db}
+  .btn-ghost{background:transparent;color:#fff;border:2px solid #35d0cb}
+  .btn-ghost:hover{background:#35d0cb;color:#0d1626}
+  section{padding:44px 0}
+  section h2{font-size:clamp(24px,3.6vw,34px);margin-bottom:6px;text-align:center}
+  section h2 span{color:#35d0cb}
+  .sub{text-align:center;color:#9fb0c8;margin-bottom:28px;max-width:720px;margin-left:auto;margin-right:auto}
+  .video-box{max-width:860px;margin:0 auto}
+  video{width:100%;border-radius:12px;box-shadow:0 18px 60px rgba(0,0,0,.55);background:#000}
+  .parts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .part{background:#111d33;border:1px solid #1e3a55;border-radius:12px;padding:20px}
+  .part h3{color:#35d0cb;font-size:18px;margin-bottom:8px}
+  .part ul{list-style:none;font-size:14.5px;color:#c6d2e3}
+  .part li{padding:5px 0;border-bottom:1px solid #1a2c46}
+  .part li:last-child{border-bottom:none}
+  .part li b{color:#8b98ad;font-weight:600;margin-right:6px}
+  .method{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:8px}
+  .step{background:#111d33;border:1px solid #1e3a55;border-radius:12px;padding:20px;text-align:center}
+  .step .n{font-size:30px}
+  .step h3{margin:8px 0 6px;font-size:17px;color:#35d0cb}
+  .step p{font-size:14px;color:#9fb0c8}
+  .samples{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+  .samples a{flex:1 1 220px;max-width:300px}
+  .samples img{width:100%;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .2s}
+  .samples img:hover{transform:scale(1.03)}
+  .samples p{text-align:center;font-size:13px;color:#9fb0c8;margin-top:6px}
+  .author{display:flex;gap:24px;align-items:center;justify-content:center;flex-wrap:wrap;background:#111d33;border:1px solid #1e3a55;border-radius:14px;padding:28px;max-width:760px;margin:0 auto}
+  .author .ini{width:84px;height:84px;border-radius:50%;background:#35d0cb;color:#0d1626;font-size:34px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+  .author p{color:#9fb0c8;font-size:15px;max-width:560px}
+  .author p b{color:#fff}
+  .lead{background:linear-gradient(135deg,#12324a,#0d1626);border:1px solid #1e5a66;border-radius:14px;padding:36px 28px;max-width:640px;margin:0 auto;text-align:center}
+  .lead h2{margin-bottom:8px}
+  .lead p{color:#9fb0c8;margin-bottom:18px;font-size:15px}
+  .lead form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .lead input[type=email]{flex:1 1 240px;max-width:340px;padding:13px 16px;border-radius:10px;border:1px solid #2a4a63;background:#0d1626;color:#fff;font-size:16px}
+  .lead .fine{font-size:12px;color:#5c6b84;margin-top:12px}
+  .buy{text-align:center}
+  .buy .btn{font-size:19px;padding:16px 40px}
+  .buy p{color:#9fb0c8;margin-top:12px;font-size:14px}
+  footer{border-top:1px solid #1a2c46;padding:24px 0;text-align:center;color:#5c6b84;font-size:13px}
 </style>
 </head>
 <body>
-<div id="loader">
-  <div class="t">📖 Opening <b>Digital Marketing &amp; SEO Mastery</b>…</div>
-  <div class="barw"><div class="bar" id="loadbar"></div></div>
-  <div class="pc" id="loadpc">0%</div>
-</div>
-<header>
-  <h1>DIGITAL MARKETING <span>&amp; SEO MASTERY</span></h1>
-  <p>Digital flipbook edition &middot; Zulfiqar Ali Sajid</p>
-</header>
-<div id="stage"><div id="flipbook"></div></div>
-<div id="controls">
-  <button id="prev">← Prev</button>
-  <div id="pageno">– / –</div>
-  <button id="zopen">🔍 Zoom</button>
-  <button id="next">Next →</button>
-</div>
-<div id="hint">Tip: drag a page corner or tap a page side to turn it · tap 🔍 Zoom to magnify the page.</div>
-<div id="zoomov">
-  <div id="zoombar">
-    <button id="zin">＋</button>
-    <button id="zout">－</button>
-    <button id="zreset">Reset</button>
-    <button id="zclose">✕ Close</button>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <img class="cover" src="assets/cover.jpg" alt="Digital Marketing &amp; SEO Mastery book cover">
+      <div>
+        <h1>DIGITAL MARKETING<br><span>&amp; SEO MASTERY</span></h1>
+        <p class="tagline"><b>From Zero to Expert</b> — the beginner's textbook that teaches like a teacher, not a manual.</p>
+        <div class="stats">
+          <div class="stat"><b>27</b>chapters</div>
+          <div class="stat"><b>6</b>parts</div>
+          <div class="stat"><b>387</b>pages</div>
+          <div class="stat"><b>89</b>charts &amp; visuals</div>
+        </div>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="read/">📖 Read the Book Free</a>
+          <a class="btn btn-ghost" href="#trailer">▶ Watch Trailer</a>
+        </div>
+      </div>
+    </div>
   </div>
-  <div id="zoomstage"><img id="zoomimg" alt="Zoomed book page"></div>
-  <div id="zoomhint">Pinch or use ＋/－ to zoom · drag to move · double-tap toggles zoom</div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
+</header>
+
+<section id="trailer">
+  <div class="wrap">
+    <h2>See inside the book <span>in 60 seconds</span></h2>
+    <p class="sub">Flip through real pages — lessons, charts, practice questions and summaries.</p>
+    <div class="video-box">
+      <video controls preload="metadata" poster="assets/cover.jpg" src="assets/trailer.mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</section>
+
+<section id="inside">
+  <div class="wrap">
+    <h2>What's <span>inside</span></h2>
+    <p class="sub">Six parts take you from your first marketing concept to AI-era strategy — in plain, simple English.</p>
+    <div class="parts">
+      <div class="part">
+        <h3>Part 1 · Foundations of Digital Marketing</h3>
+        <ul>
+          <li><b>1</b>What Is Digital Marketing?</li>
+          <li><b>2</b>Building Your Online Presence</li>
+          <li><b>3</b>Understanding Your Audience</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h3>Part 2 · SEO</h3>
+        <ul>
+          <li><b>4</b>How Search Engines Work</li>
+          <li><b>5</b>Keyword Research &amp; Search Intent</li>
+          <li><b>6</b>On-Page SEO</li>
+          <li><b>7</b>Technical SEO</li>
+          <li><b>8</b>E-E-A-T &amp; High-Quality Content</li>
+          <li><b>9</b>Off-Page SEO &amp; Link Building</li>
+          <li><b>10</b>Local SEO</li>
+          <li><b>11</b>AEO &amp; GEO: Optimizing for AI Search</li>
+          <li><b>12</b>Measuring SEO Success</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h3>Part 3 · Content Marketing</h3>
+        <ul>
+          <li><b>13</b>Content Marketing Strategy</li>
+          <li><b>14</b>Writing for the Web</li>
+          <li><b>15</b>Video &amp; Visual Content</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h3>Part 4 · Social Media Marketing</h3>
+        <ul>
+          <li><b>16</b>Social Media Strategy</li>
+          <li><b>17</b>Facebook &amp; Instagram Marketing</li>
+          <li><b>18</b>TikTok &amp; Short-Form Video</li>
+          <li><b>19</b>YouTube Marketing</li>
+          <li><b>20</b>LinkedIn &amp; X Marketing</li>
+          <li><b>21</b>Influencer Marketing &amp; Social Commerce</li>
+          <li><b>22</b>Community Building &amp; Social Search</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h3>Part 5 · Paid Advertising</h3>
+        <ul>
+          <li><b>23</b>Google Ads</li>
+          <li><b>24</b>Meta &amp; TikTok Ads</li>
+        </ul>
+      </div>
+      <div class="part">
+        <h3>Part 6 · Email, Analytics &amp; Future</h3>
+        <ul>
+          <li><b>25</b>Email Marketing</li>
+          <li><b>26</b>Marketing Analytics, KPIs &amp; Reporting</li>
+          <li><b>27</b>AI in Marketing, Ethics &amp; Careers</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="method">
+  <div class="wrap">
+    <h2>A book that <span>teaches like a teacher</span></h2>
+    <p class="sub">Every topic follows the same classroom-tested pattern — no confusing walls of text.</p>
+    <div class="method">
+      <div class="step"><div class="n">🎯</div><h3>Clear Goals</h3><p>Each lesson starts with what you will learn.</p></div>
+      <div class="step"><div class="n">👨‍🏫</div><h3>Simple Explanations</h3><p>Teacher-voice teaching in short, easy sentences.</p></div>
+      <div class="step"><div class="n">✅</div><h3>Check Understanding</h3><p>Quick questions after every topic.</p></div>
+      <div class="step"><div class="n">📝</div><h3>Practice &amp; MCQs</h3><p>Activities plus 10 MCQs per chapter — answers included.</p></div>
+      <div class="step"><div class="n">📊</div><h3>Real Charts</h3><p>89 illustrations from trusted sources like DataReportal.</p></div>
+      <div class="step"><div class="n">📖</div><h3>Key Terms &amp; Glossary</h3><p>Vocabulary locked in, chapter summaries to revise.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="samples">
+  <div class="wrap">
+    <h2>Peek at <span>real pages</span></h2>
+    <p class="sub">Actual pages from the book — tap any page to open the free flipbook.</p>
+    <div class="samples">
+      <a href="read/"><img src="assets/sample-lesson.jpg" alt="Sample lesson page"><p>A guided lesson page</p></a>
+      <a href="read/"><img src="assets/sample-chart.jpg" alt="Sample chart page"><p>Charts from trusted data</p></a>
+      <a href="read/"><img src="assets/sample-quiz.jpg" alt="Sample practice page"><p>Practice &amp; self-assessment</p></a>
+    </div>
+  </div>
+</section>
+
+<section id="author">
+  <div class="wrap">
+    <h2>About the <span>author</span></h2>
+    <p class="sub">&nbsp;</p>
+    <div class="author">
+      <div class="ini">ZA</div>
+      <p><b>Zulfiqar Ali Sajid</b> is an author and educator who writes practical, classroom-tested books for learners of all ages — from children's primers to professional textbooks. <i>Digital Marketing &amp; SEO Mastery</i> was written for Pakistani and international institutes, in the simple, clear English his students asked for.</p>
+    </div>
+  </div>
+</section>
+
+<section id="lead">
+  <div class="wrap">
+    <div class="lead">
+      <h2>Get the <span style="color:#35d0cb">free sample chapter</span></h2>
+      <p>Join the reader list — get a free sample chapter plus study tips and update alerts. No spam, ever.</p>
+      <!-- LEAD FORM: paste your Google Form action URL into FORM_ACTION below.
+           Make a form at forms.google.com with an Email field, then use its action URL. -->
+      <form id="leadform">
+        <input type="email" id="leademail" placeholder="Your email address" required>
+        <button class="btn btn-primary" type="submit">Send Me the Sample</button>
+      </form>
+      <p class="fine" id="leadmsg">We respect your privacy. Unsubscribe anytime.</p>
+    </div>
+  </div>
+</section>
+
+<section id="buy" class="buy">
+  <div class="wrap">
+    <h2>Own the <span>paperback</span></h2>
+    <p class="sub">The complete 387-page print edition — coming soon on Amazon.</p>
+    <a class="btn btn-primary" href="read/">📖 Read Free Online Now</a>
+    <p>Print edition launching soon · Institutes: contact us for bulk orders</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    © 2026 Zulfiqar Ali Sajid · Digital Marketing &amp; SEO Mastery · All rights reserved.
+  </div>
+</footer>
+
 <script>
-(function(){
-  var TOTAL = 389, loaded = 0, urls = [], flip = null;
-  var bar = document.getElementById('loadbar'),
-      pc = document.getElementById('loadpc'),
-      pageno = document.getElementById('pageno'),
-      prevB = document.getElementById('prev'),
-      nextB = document.getElementById('next');
-  for (var i = 1; i <= TOTAL; i++) {
-    urls.push('pages/page-' + String(i).padStart(3,'0') + '.jpg');
+/* Paste your Google Form action URL between the quotes to collect emails.
+   Leave empty and the form will show a setup note (for the site owner). */
+var FORM_ACTION = "";
+document.getElementById('leadform').addEventListener('submit', function(e){
+  e.preventDefault();
+  var em = document.getElementById('leademail').value.trim();
+  var msg = document.getElementById('leadmsg');
+  if(!FORM_ACTION){
+    msg.textContent = "Thanks! Email capture is being set up — meanwhile, enjoy the free flipbook above. 📖";
+    msg.style.color = "#35d0cb";
+    return;
   }
-  function updateUI(e){
-    var p = e.data + 1;
-    pageno.textContent = p + ' / ' + TOTAL;
-    prevB.disabled = (e.data <= 0);
-    nextB.disabled = (e.data >= TOTAL - 1);
-  }
-  function initBook(){
-    if (typeof St === 'undefined' || !St.PageFlip) {
-      document.querySelector('#loader .t').textContent = 'Could not load the page-flip library. Check your connection and reload.';
-      return;
-    }
-    flip = new St.PageFlip(document.getElementById('flipbook'), {
-      width: 550, height: 712,
-      size: 'stretch',
-      minWidth: 300, maxWidth: 1100,
-      minHeight: 390, maxHeight: 1425,
-      maxShadowOpacity: 0.5,
-      showCover: true,
-      mobileScrollSupport: true,
-      swipeDistance: 25,
-      showPageCorners: true,
-      disableFlipByClick: false,
-      flippingTime: 700
-    });
-    flip.loadFromImages(urls);
-    flip.on('flip', updateUI);
-    flip.on('init', function(e){ updateUI({data:0}); });
-    prevB.onclick = function(){ flip.flipPrev(); };
-    nextB.onclick = function(){ flip.flipNext(); };
-    document.addEventListener('keydown', function(ev){
-      if (document.getElementById('zoomov').style.display === 'flex') {
-        if (ev.key === 'Escape') zClose();
-        return;
-      }
-      if (ev.key === 'ArrowLeft') flip.flipPrev();
-      if (ev.key === 'ArrowRight') flip.flipNext();
-    });
-    document.getElementById('loader').style.display = 'none';
-  }
-  /* ---------- page zoom lightbox ---------- */
-  var zov=document.getElementById('zoomov'),
-      zstage=document.getElementById('zoomstage'),
-      zimg=document.getElementById('zoomimg'),
-      zscale=1, zx=0, zy=0, zdw=0, zdh=0,
-      ZMIN=1, ZMAX=4;
-  function zApply(){ zimg.style.transform='translate('+zx+'px,'+zy+'px) scale('+zscale+')'; }
-  function zClamp(){
-    if(!zdw) return;
-    var sw=zstage.clientWidth, sh=zstage.clientHeight;
-    var mx=Math.max(0,(zdw*zscale-sw)/2), my=Math.max(0,(zdh*zscale-sh)/2);
-    zx=Math.min(mx,Math.max(-mx,zx)); zy=Math.min(my,Math.max(-my,zy));
-  }
-  function zSet(ns,cx,cy){
-    ns=Math.min(ZMAX,Math.max(ZMIN,ns));
-    if(ns===zscale) return;
-    var r=zstage.getBoundingClientRect();
-    if(cx===undefined){cx=r.width/2; cy=r.height/2;}
-    cx-=r.width/2; cy-=r.height/2;
-    var k=ns/zscale;
-    zx=zx*k+cx*(1-k); zy=zy*k+cy*(1-k);
-    zscale=ns;
-    if(zscale===1){zx=0; zy=0;}
-    zClamp(); zApply();
-  }
-  function zOpen(){
-    if(!flip) return;
-    var i=flip.getCurrentPageIndex();
-    zdw=0; zdh=0;
-    zimg.onload=function(){ zdw=zimg.clientWidth||0; zdh=zimg.clientHeight||0; zClamp(); zApply(); };
-    zimg.src=urls[i]||urls[0];
-    zscale=1; zx=0; zy=0; zApply();
-    zov.style.display='flex';
-  }
-  function zClose(){ zov.style.display='none'; zimg.removeAttribute('src'); }
-  document.getElementById('zopen').onclick=zOpen;
-  document.getElementById('zclose').onclick=zClose;
-  document.getElementById('zin').onclick=function(){zSet(zscale*1.4);};
-  document.getElementById('zout').onclick=function(){zSet(zscale/1.4);};
-  document.getElementById('zreset').onclick=function(){zSet(1);};
-  zimg.addEventListener('dblclick',function(){ zSet(zscale>1.2?1:2.5); });
-  zstage.addEventListener('wheel',function(e){
-    e.preventDefault();
-    var r=zstage.getBoundingClientRect();
-    zSet(zscale*(e.deltaY<0?1.18:1/1.18), e.clientX-r.left, e.clientY-r.top);
-  },{passive:false});
-  var zpts=new Map(), zPinch=0;
-  zstage.addEventListener('pointerdown',function(e){
-    try{zstage.setPointerCapture(e.pointerId);}catch(_){}
-    zpts.set(e.pointerId,{x:e.clientX,y:e.clientY});
-    if(zpts.size===2){var p=Array.from(zpts.values()); zPinch=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y);}
-  });
-  zstage.addEventListener('pointermove',function(e){
-    if(!zpts.has(e.pointerId)) return;
-    var prev=zpts.get(e.pointerId);
-    zpts.set(e.pointerId,{x:e.clientX,y:e.clientY});
-    if(zpts.size===1){
-      if(zscale>1){ zx+=e.clientX-prev.x; zy+=e.clientY-prev.y; zClamp(); zApply(); }
-    }else if(zpts.size===2){
-      var p=Array.from(zpts.values());
-      var d=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y);
-      if(zPinch>0&&d>0){
-        var r=zstage.getBoundingClientRect();
-        zSet(zscale*(d/zPinch),(p[0].x+p[1].x)/2-r.left,(p[0].y+p[1].y)/2-r.top);
-      }
-      zPinch=d;
-    }
-  });
-  var zEnd=function(e){ zpts.delete(e.pointerId); zPinch=0; };
-  zstage.addEventListener('pointerup',zEnd);
-  zstage.addEventListener('pointercancel',zEnd);
-  /* ---------- preload all pages ---------- */
-  urls.forEach(function(u){
-    var im = new Image();
-    var done = function(){
-      loaded++;
-      var pct = Math.round(loaded / TOTAL * 100);
-      bar.style.width = pct + '%';
-      pc.textContent = pct + '%';
-      if (loaded >= TOTAL) initBook();
-    };
-    im.onload = done; im.onerror = done;
-    im.src = u;
-  });
-})();
+  var f = document.createElement('form');
+  f.method = 'POST'; f.action = FORM_ACTION; f.target = '_blank'; f.style.display = 'none';
+  var i = document.createElement('input'); i.name = 'email'; i.value = em;
+  f.appendChild(i); document.body.appendChild(f); f.submit();
+  msg.textContent = "You're on the list! Check your inbox for the sample chapter. ✅";
+  msg.style.color = "#35d0cb";
+});
 </script>
 </body>
 </html>
