@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Marketing &amp; SEO Mastery — Digital Flipbook</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; }
+  body {
+    background:#0d1626;
+    color:#e8edf5;
+    font-family:"Segoe UI", Arial, sans-serif;
+    display:flex; flex-direction:column; align-items:center;
+    min-height:100vh; overflow:hidden;
+  }
+  header { text-align:center; padding:14px 16px 6px; }
+  header h1 { font-size:20px; letter-spacing:.5px; }
+  header h1 span { color:#35d0cb; }
+  header p { font-size:12px; color:#8b98ad; margin-top:4px; }
+  #stage { flex:1; width:100%; display:flex; align-items:center; justify-content:center; padding:6px 0; min-height:0; }
+  #flipbook { box-shadow:0 18px 60px rgba(0,0,0,.55); }
+  #loader {
+    position:fixed; inset:0; background:#0d1626; z-index:50;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px;
+  }
+  #loader .t { font-size:18px; }
+  #loader .barw { width:min(420px,80vw); height:10px; background:#1c2940; border-radius:6px; overflow:hidden; }
+  #loader .bar { height:100%; width:0%; background:#35d0cb; border-radius:6px; transition:width .2s; }
+  #loader .pc { font-size:13px; color:#8b98ad; }
+  #controls { display:flex; align-items:center; gap:14px; padding:10px 0 16px; }
+  #controls button {
+    background:#1c2940; color:#fff; border:1px solid #35d0cb; border-radius:8px;
+    padding:9px 18px; font-size:15px; cursor:pointer;
+  }
+  #controls button:hover { background:#35d0cb; color:#0d1626; }
+  #controls button:disabled { opacity:.35; cursor:default; }
+  #controls button:disabled:hover { background:#1c2940; color:#fff; }
+  #pageno { font-size:14px; color:#c6d2e3; min-width:150px; text-align:center; }
+  #hint { font-size:11px; color:#5c6b84; padding-bottom:10px; }
+</style>
+</head>
+<body>
+<div id="loader">
+  <div class="t">📖 Opening <b>Digital Marketing &amp; SEO Mastery</b>…</div>
+  <div class="barw"><div class="bar" id="loadbar"></div></div>
+  <div class="pc" id="loadpc">0%</div>
+</div>
+<header>
+  <h1>DIGITAL MARKETING <span>&amp; SEO MASTERY</span></h1>
+  <p>Digital flipbook edition &middot; Zulfiqar Ali Sajid</p>
+</header>
+<div id="stage"><div id="flipbook"></div></div>
+<div id="controls">
+  <button id="prev">← Prev</button>
+  <div id="pageno">– / –</div>
+  <button id="next">Next →</button>
+</div>
+<div id="hint">Tip: drag a page corner, or click the left / right side of a page to turn it.</div>
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.min.js"></script>
+<script>
+(function(){
+  var TOTAL = 389, loaded = 0, urls = [];
+  var bar = document.getElementById('loadbar'),
+      pc = document.getElementById('loadpc'),
+      pageno = document.getElementById('pageno'),
+      prevB = document.getElementById('prev'),
+      nextB = document.getElementById('next');
+  for (var i = 1; i <= TOTAL; i++) {
+    urls.push('pages/page-' + String(i).padStart(3,'0') + '.jpg');
+  }
+  function updateUI(e){
+    var p = e.data + 1;
+    pageno.textContent = p + ' / ' + TOTAL;
+    prevB.disabled = (e.data <= 0);
+    nextB.disabled = (e.data >= TOTAL - 1);
+  }
+  function initBook(){
+    if (typeof St === 'undefined' || !St.PageFlip) {
+      document.querySelector('#loader .t').textContent = 'Could not load the page-flip library. Check your connection and reload.';
+      return;
+    }
+    var flip = new St.PageFlip(document.getElementById('flipbook'), {
+      width: 550, height: 712,
+      size: 'stretch',
+      minWidth: 300, maxWidth: 1100,
+      minHeight: 390, maxHeight: 1425,
+      maxShadowOpacity: 0.5,
+      showCover: true,
+      mobileScrollSupport: true,
+      swipeDistance: 25,
+      showPageCorners: true,
+      disableFlipByClick: false,
+      flippingTime: 700
+    });
+    flip.loadFromImages(urls);
+    flip.on('flip', updateUI);
+    flip.on('init', function(e){ updateUI({data:0}); });
+    prevB.onclick = function(){ flip.flipPrev(); };
+    nextB.onclick = function(){ flip.flipNext(); };
+    document.addEventListener('keydown', function(ev){
+      if (ev.key === 'ArrowLeft') flip.flipPrev();
+      if (ev.key === 'ArrowRight') flip.flipNext();
+    });
+    document.getElementById('loader').style.display = 'none';
+  }
+  urls.forEach(function(u){
+    var im = new Image();
+    var done = function(){
+      loaded++;
+      var pct = Math.round(loaded / TOTAL * 100);
+      bar.style.width = pct + '%';
+      pc.textContent = pct + '%';
+      if (loaded >= TOTAL) initBook();
+    };
+    im.onload = done; im.onerror = done;
+    im.src = u;
+  });
+})();
+</script>
+</body>
+</html>
